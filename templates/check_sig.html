@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Мероприятие{% endblock %}
+{% block content %}
+<h1>Проверить подписи документа "{{ document.name }}":</h1>
+{% for sig in SigDocum %}
+    {% if sig.doc == document %}
+        <h2>{{ sig.signaturer.get_full_name }}:</h2>
+        <a href="{{ sig.signaturer.PublicKey.url }}" class="btn btn-success">
+            Публичный ключ пользователя
+          </a>
+          <a href="{{ sig.sign_doc.url }}" class="btn btn-success">
+            Подписанный документ
+          </a>  
+    {% endif %}
+{% endfor %}   
+{% endblock %}

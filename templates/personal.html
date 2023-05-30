@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Персонал{% endblock %}
+{% block content %}
+ <h1>Персонал:</h1>
+    {% for post in posts %}
+    <div class="card">
+    <div class="card-body">
+      <div class="UsersList">
+          <a class="dropdown-item" href="{% url 'profile' post.username %}">
+                {% if post.is_superuser %}
+                  <b>{{ post.get_full_name }}☑</b>
+                {%else%}
+                  <b>{{ post.get_full_name }}</b>
+                {%endif%}
+          </a>
+      </div>
+    </div>
+    </div>
+  {% endfor %}
+{% if paginator.num_pages > 1 %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if posts.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Назад</span>
+                    </a>
+                </li>
+                {% endif %}
+                <li class="page-item active"><a class="page-link" href="#!">{{ posts.number }}</a></li>
+                {% if posts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+                        <span class="sr-only">Вперёд</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+{% endif %}
+
+{% endblock %}

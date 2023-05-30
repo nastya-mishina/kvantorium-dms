@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Мои документы{% endblock %}
+{% block content %}
+<a href="{% url 'new_doc' %}" type="button" class="btn btn-primary">Загрузить документ</a>
+<h1>Мои документы:</h1>
+  {% for post in posts %}
+    {% if post.author == user %}
+          <div class="document alert alert-primary d-flex justify-content-between align-items-center flex-wrap">
+            <b>{{ post.name }}</b>
+
+
+            <div class="btn-group btn-group-sm" role="group" aria-label="Group edit document">
+                <a href="{% url 'document_delete' document_id=post.id %}" class="btn btn-danger">
+                  Удалить
+                </a>
+
+              <a href="{{ post.file.url }}" class="btn btn-success">
+                Скачать
+              </a>
+
+
+
+            </div>
+
+          </div>
+      {% endif %}
+   {% endfor %}
+{% if paginator.num_pages > 1 %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if posts.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Назад</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="page-item active"><a class="page-link" href="#!">{{ posts.number }}</a></li>
+            {% if posts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+                        <span class="sr-only">Вперёд</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+
+{% endblock %}

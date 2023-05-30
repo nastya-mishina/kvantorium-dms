@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Профиль{% endblock %}
+{% block content %}
+
+
+<main role="main" class="container">
+    <div class="row">
+      <div class="col-md-3 mb-3 mt-1">
+      <div class="card">
+        <div class="card-body">
+          <img src="{{ author.image.url }}" alt="" class="img-fluid">
+          <div class="h2">
+              {% if au_perm == 1 %}
+                {{ author.first_name }} {{author.middle_name}} {{author.last_name}}
+              {% else %}
+                {{ author.first_name }} {{author.middle_name}} {{author.last_name}}
+              {% endif %}
+          </div>
+
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <div class="h6">
+                {{ author.get_position_display }}
+            </div>
+            <div class="h6">
+                Номер телефона: {{ author.phone }}
+            </div>
+            <div class="h6">
+              Документов: {{count}}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+             {% for post in posts %}
+                {% if post.author == author %}
+                    <div class="document alert alert-primary d-flex justify-content-between align-items-center flex-wrap">
+                        <b>{{ post.name }}</b>
+
+
+                      <div class="btn-group btn-group-sm" role="group" aria-label="Group edit document">
+                        <a href="{{ post.file.url }}" class="btn btn-success">
+                          Скачать
+                        </a>
+                    {% if author == user %}
+                          <a href="{% url 'document_delete' document_id=post.id %}" class="btn btn-danger">
+                            Удалить
+                          </a>
+                    {% endif %}
+                      </div>
+
+                    </div>
+
+                {% endif %}
+             {% endfor %}
+            {% if paginator.num_pages > 1 %}
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if posts.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Назад</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="page-item active"><a class="page-link" href="#!">{{ posts.number }}</a></li>
+                    {% if posts.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+                                <span class="sr-only">Вперёд</span>
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+              </nav>
+        {% endif %}
+    </div>
+
+    </div>
+  </main>
+
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Настройки{% endblock %}
+{% block content %}
+
+<h1>Настройки:</h1>
+<h4>Смена пароля:</h4>
+    <form action="{% url 'settings' %}" method="post" enctype="multipart/form-data" >
+      {% csrf_token %}
+      <p>{{ form.non_field_errors }}</p>
+
+      <p>{{ form.old_password.label_tag }} {{ form.old_password.help_text }}</p>
+      {{ form.old_password }}
+
+      <p>{{ form.new_pass.label_tag }} {{ form.new_pass.help_text }}</p>
+      {{ form.new_pass }}
+
+      <p>{{ form.new_pass_rep.label_tag }} {{ form.new_pass_rep.help_text }}</p>
+      {{ form.new_pass_rep }}
+      <p></p>
+      <input type="submit" class="btn btn-primary" value="Добавить">
+    </form>
+<h4>Добавление Ключей:</h4>
+    <form action="{% url 'settings' %}" method="post" enctype="multipart/form-data" >
+      {% csrf_token %}
+      <p>{{ form2.non_field_errors }}</p>
+
+      <p>{{ form2.SecretKey.label_tag }} {{ form2.SecretKey.help_text }}</p>
+      {{ form2.SecretKey }}
+
+      <p>{{ form2.PublicKey.label_tag }} {{ form2.PublicKey.help_text }}</p>
+      {{ form2.PublicKey }}
+
+      <p></p>
+      <input type="submit" class="btn btn-primary" value="Добавить">
+    </form>
+{% endblock %}

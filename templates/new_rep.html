@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Новый Отчёт{% endblock %}
+{% block content %}
+    <form action="{% url 'reports' %}" method="post" enctype="multipart/form-data" >
+      {% csrf_token %}
+      <p>{{ form.non_field_errors }}</p>
+
+      <p>{{ form.file.label_tag }} {{ form.file.help_text }}</p>
+
+      {{ form.file }}
+
+      <p>{{ form.name.label_tag }} {{ form.name.help_text }}</p>
+
+      {{ form.name }}
+      <p></p>
+      <button type="submit" class="btn btn-primary">Загрузить</button>
+    </form>
+{% endblock %}

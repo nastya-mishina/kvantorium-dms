@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Подписать{% endblock %}
+{% block content %}
+    <form action="{% url 'signature' document_id=document_id%}" method="post" enctype="multipart/form-data" >
+      {% csrf_token %}
+      <p>{{ form.non_field_errors }}</p>
+
+      <p>{{ form.sign_doc.label_tag }} {{ form.sign_doc.help_text }}</p>
+
+      {{ form.sign_doc }}
+      <p></p>
+      <button type="submit" class="btn btn-primary">Загрузить</button>
+    </form>
+{% endblock %}

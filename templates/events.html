@@ -1,0 +1,53 @@
+
+{% extends "base.html" %}
+
+{% block title %}Мероприятия{% endblock %}
+
+{% block content %}
+<a href="{% url 'new_event' %}" type="button" class="btn btn-primary">Создать мероприятие</a>
+<h1>Мероприятия:</h1>
+{% if posts %}
+    {% for post in posts %}
+        <div class="document alert alert-primary d-flex justify-content-between flex-wrap">
+            <p><b><font color="black">{{ post.date }} | {{ post.time }} |</font></b>
+                <b><a href="{% url 'event_one' event_id=post.id %}" >{{ post.short_text }}</a></b></p>
+            <p>
+            {% if post.author != user %}
+                <a href="{% url 'profile' post.author.username %}" class="btn btn-secondary">
+                    {{post.author.get_full_name }}</a>
+            {% endif %}
+                {% if post.author == user %}
+                      <a href="{% url 'event_delete' event_id=post.id %}" class="btn btn-danger">
+                        Удалить
+                      </a>
+                {% endif %}
+
+            </p>
+
+        </div>
+    {% endfor %}
+{% endif %}
+{% if paginator.num_pages > 1 %}
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+          {% if posts.has_previous %}
+             <li class="page-item">
+                 <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+                       <span aria-hidden="true">&laquo;</span>
+                       <span class="sr-only">Назад</span>
+                 </a>
+             </li>
+          {% endif %}
+          <li class="page-item active"><a class="page-link" href="#!">{{ posts.number }}</a></li>
+          {% if posts.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+                  <span class="sr-only">Вперёд</span>
+                  <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          {% endif %}
+      </ul>
+    </nav>
+{% endif %}
+{% endblock %}

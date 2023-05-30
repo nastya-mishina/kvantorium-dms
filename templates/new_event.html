@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Новое мероприятие{% endblock %}
+{% block content %}
+    <form action="{% url 'events' %}" method="post" enctype="multipart/form-data" >
+      {% csrf_token %}
+      <p>{{ form.non_field_errors }}</p>
+
+      {{ form.date.label_tag }} {{ form.date.help_text }}
+      <p>{{ form.date }}</p>
+
+      <p>{{ form.time.label_tag }} {{ form.time.help_text }}</p>
+      {{ form.time }}
+
+      <p>{{ form.short_text.label_tag }} {{ form.short_text.help_text }}</p>
+      {{ form.short_text }}
+
+      <p>{{ form.text.label_tag }} {{ form.text.help_text }}</p>
+      {{ form.text }}
+      <p></p>
+      <input type="submit" class="btn btn-primary" value="Добавить">
+    </form>
+{% endblock %}
