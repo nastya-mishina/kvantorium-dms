@@ -15,12 +15,12 @@ class User(AbstractUser):
         ('kvant', 'Кванториум'),
     )
     middle_name = models.CharField(max_length=30, verbose_name="Отчество",
-                                   default="")
+                                   default="", blank=True)
     position = models.CharField(max_length=30, choices=POSITIONS,
-                                verbose_name="Должность", default="")
+                                verbose_name="Должность", default="", blank=True)
     phoneRegex = RegexValidator(regex=r"^\+?1?\d{8,15}$")
     phone = models.CharField(validators=[phoneRegex], max_length=12, unique=True,
-                             verbose_name="Номер телефона (Через +7)")
+                             verbose_name="Номер телефона (Через +7)", blank=True)
     password = models.CharField(max_length=2000, verbose_name="Пароль",
                                 default="pbkdf2_sha256$390000$jNQoFll3T4NGf109vDxvYX$wzXUUE3zThacoBzb0BE4x89F4N6qtUtpF1z2vYFpg/c=")
     PublicKey = models.FileField(verbose_name='Публичный ключ', blank=True)
